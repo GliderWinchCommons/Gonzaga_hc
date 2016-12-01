@@ -1,6 +1,6 @@
 package Communications;
 
-import DatabaseUtilities.DatabaseDataObjectUtilities;
+import DatabaseUtilities.DatabaseEntryInsert;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -145,21 +145,22 @@ public class MessagePipeline implements Runnable {
     }
     
     public void WriteToSocket(String s)
-    {
+    {   /*
         try {
             writer.write(s);
             writer.flush();
             try {
                 if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
                 {
-                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
+                    DatabaseEntryInsert.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
                     oldMessage = currentMessage;
                 }
             } catch (SQLException | ClassNotFoundException ex) {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }       
+        }    
+        */
     }
     
     public void run()
@@ -181,14 +182,16 @@ public class MessagePipeline implements Runnable {
                 }
             }*/
             listener.update(currentMessage);
+            /*
             try {
                 if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
                 {
-                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
+                    DatabaseEntryInsert.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
                     oldMessage = currentMessage;
                 }
             } catch (SQLException | ClassNotFoundException ex) {
-            }            
+            }       
+            */
         }
     }
     

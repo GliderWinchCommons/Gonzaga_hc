@@ -13,9 +13,15 @@ package DataObjects;
  */
 
 public class Sailplane {
-    String id;
-    //n_number of the plane
-    String nNumber;
+    int id;
+    //reg_number of the plane
+    String regNumber;
+    
+    //glider name
+    String name;
+    
+    //name of the owner
+    String owner;
     
     //type of the plane
     String type;
@@ -58,11 +64,35 @@ public class Sailplane {
     public Sailplane(){
     }
     
-    public Sailplane(String nNumber, String Type,
+    public Sailplane(String regNumber, String name, String owner, String Type,
                      float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
                      float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
                      float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
-        this.nNumber = nNumber;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
+        this.type = Type;
+        this.maximumGrossWeight = maximumGrossWeight;
+        this.emptyWeight= emptyWeight;
+        this.indicatedStallSpeed = indicatedStallSpeed;
+        this.maximumWinchingSpeed = maximumWinchingSpeed;
+        this.maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength;
+        this.maximumTension = maxTension;
+        this.cableReleaseAngle = cableReleaseAngle;
+        this.carryBallast = carryBallast;
+        this.multipleSeats = multipleSeats;
+        this.optionalInfo = optional;
+        
+        ballast = 0;
+    }
+    public Sailplane(int id, String regNumber, String name, String owner, String Type,
+                     float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
+                     float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
+                     float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
+        this.id = id;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
         this.emptyWeight= emptyWeight;
@@ -78,22 +108,25 @@ public class Sailplane {
         ballast = 0;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            return id;
-        }
+    public void setId(int id) {
+        this.id = id;
     }
     
-    public void setId(String newId){
-        id = newId;
+    public int getId() {
+        return id;
     }
     
-    public String getNumber() {
-        return nNumber;
-    }     
+    public String getRegistration() {
+        return regNumber;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
     
     public String getType() {
         return type;
@@ -130,37 +163,9 @@ public class Sailplane {
     public float getMaximumGrossWeight(){
         return maximumGrossWeight;
     }
-        
-    public int storeCarryBallast() {
-        if (carryBallast)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnCarryBallast(int cBallast) {
-        if(cBallast == 0)
-            return false;
-        else if(cBallast == 1)
-            return true;
-        return false;
-    }
     
     public boolean getCarryBallast() {
         return carryBallast;
-    }
-    
-    public int storeMultipleSeats() {
-        if (multipleSeats)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnMultipleSeats(int cMultipleSeats) {
-        if(cMultipleSeats == 0)
-            return false;
-        else if(cMultipleSeats == 1)
-            return true;
-        return false;
     }
     
     public boolean getMultipleSeats() {
@@ -179,7 +184,8 @@ public class Sailplane {
         this.ballast += ballast;
     }
 
+    @Override
     public String toString() {
-        return nNumber;
+        return name + " " + regNumber + " " + owner;
     }
 }

@@ -11,14 +11,14 @@ package DataObjects;
  * @author Noah Fujioka
  */
 public class LaunchMetaData {
-    Profile currentOperatorProfile;
+    Operator currentOperatorProfile;
     Pilot currentPilot;
     Sailplane currentSailplane;
     Airfield currentAirfield;
     Runway currentRunway;
     GliderPosition currentPosition;
     Parachute currentParachute;
-    DrumParameters currentDrumParameters;
+    Drum currentDrum;
     Winch currentWinch;
     Environmental currentEnvironmental; //At the start of the flight
     long startTimestamp;
@@ -27,9 +27,9 @@ public class LaunchMetaData {
     public LaunchMetaData(){
     }
     
-    public LaunchMetaData(Profile newProfile, Pilot newPilot, Sailplane newSailplane,
+    public LaunchMetaData(Operator newProfile, Pilot newPilot, Sailplane newSailplane,
             Airfield newAirfield, Runway newRunway, GliderPosition newPosition,
-            Parachute newParachute, DrumParameters newDrumParameters, Winch newWinch, 
+            Parachute newParachute, Drum newDrum, Winch newWinch, 
             Environmental newEnvironmental, long newStartTimestamp,
             long newEndTimestamp){
         currentOperatorProfile = newProfile;
@@ -39,7 +39,7 @@ public class LaunchMetaData {
         currentRunway = newRunway;
         currentPosition = newPosition;
         currentParachute = newParachute;
-        currentDrumParameters = newDrumParameters;
+        currentDrum = newDrum;
         currentWinch = newWinch;
         currentEnvironmental = newEnvironmental;
         startTimestamp = newStartTimestamp;
@@ -52,7 +52,7 @@ public class LaunchMetaData {
                 ", " + startTimestamp);
     }
 
-    public Profile getProfile(){
+    public Operator getProfile(){
         return currentOperatorProfile;
     }
     
@@ -80,8 +80,8 @@ public class LaunchMetaData {
         return currentParachute;
     }
     
-    public DrumParameters getDrumParameters(){
-        return currentDrumParameters;
+    public Drum getDrum(){
+        return currentDrum;
     }
     
     public Winch getWinch(){
