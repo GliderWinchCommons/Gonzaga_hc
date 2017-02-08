@@ -12,11 +12,11 @@ package DataObjects;
  * @author garreola-gutierrez, matt dargen, dbennett3, Noah Fujioka
  */
 public class Runway {
-    int id;                 //randomly genterated id
-    int parentId;           //airfield's random id
-    String runwayName;      //runway's name
-    float magneticHeading;  //degrees from magnetic north
-    String optionalInfo;
+    private int id;                 //randomly genterated id
+    private int parentId;           //airfield's random id
+    private String runwayName;      //runway's name
+    private float magneticHeading;  //degrees from magnetic north
+    private String optionalInfo;
     
     //constructers
     

@@ -13,13 +13,13 @@ package DataObjects;
  */
 public class GliderPosition {
     
-    int id;                 //randomly generated id
-    int runwayParentId;     //runways id
-    String positionName;    //the positions name
-    float altitude;         //distance from sea level
-    float latitude;         //global y coordinate
-    float longitude;        //global x coordinate
-    String optionalInfo;
+    private int id;                 //randomly generated id
+    private int runwayParentId;     //runways id
+    private String positionName;    //the positions name
+    private float altitude;         //distance from sea level
+    private float latitude;         //global y coordinate
+    private float longitude;        //global x coordinate
+    private String optionalInfo;
     
     //constructors
     public GliderPosition(String name, float altitude, float latitude, float longitude, String optional){

@@ -13,16 +13,16 @@ package DataObjects;
  */
 public class Pilot {
     
-    int pilotId;                //randomly genrated id
-    String lastName;            //Pilot's last name
-    String firstName;           //Pilot's first name
-    String middleName;          //Pilot's middle name
-    float flightWeight;         //Pilot's weight
-    String capability;          //Pilot's capability
-    float preference;           //Pilot's launch preference
-    String emergencyContact;    //Emergency Contact name
-    String emergencyPhone;      //Emergency Contact number
-    String optional_info;
+    private int pilotId;                //randomly genrated id
+    private String lastName;            //Pilot's last name
+    private String firstName;           //Pilot's first name
+    private String middleName;          //Pilot's middle name
+    private float flightWeight;         //Pilot's weight
+    private String capability;          //Pilot's capability
+    private float preference;           //Pilot's launch preference
+    private String emergencyContact;    //Emergency Contact name
+    private String emergencyPhone;      //Emergency Contact number
+    private String optional_info;
     
     //constructors
     public Pilot(int pilotId, String firstName, String lastName, String middleName,

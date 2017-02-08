@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Jan 11 00:07:01 PST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0159-8c90-ddae-000006ca6d70 
+Fri Feb 03 22:35:55 PST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015a-07d6-13ae-000006caecc0 
 on database directory /Users/gene/code/java/senior project/hc/HostController1/hcDatabase  with class loader sun.misc.Launcher$AppClassLoader@2c7b84de 
 Loaded from file:/Users/gene/code/java/senior%20project/hc/lib/derby.jar
 java.vendor=Oracle Corporation

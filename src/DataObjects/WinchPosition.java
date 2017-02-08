@@ -11,19 +11,19 @@ package DataObjects;
  * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
-    int id;                 //random id
-    int runwayParentId;     //parent runway random id
-    String name;            //runway's name
-    float altitude;         //distance from sea level
-    float latitude;         //global y coordinate
-    float longitude;        //global x coordinate
-    String optionalInfo;
+    private int id;                 //random id
+    private int runwayParentId;     //parent runway random id
+    private String name;            //runway's name
+    private float elevation;         //distance from sea level
+    private float latitude;         //global y coordinate
+    private float longitude;        //global x coordinate
+    private String optionalInfo;
     
     //constructers
     
     public WinchPosition(String name, float altitude, float latitude, float longitude, String optional) {
         this.name = name;
-        this.altitude = altitude;
+        this.elevation = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
         this.optionalInfo = optional;
@@ -34,7 +34,7 @@ public class WinchPosition {
         this.id = id;
         this.runwayParentId = pid;
         this.name = name;
-        this.altitude = altitude;
+        this.elevation = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
         this.optionalInfo = optional;
@@ -64,7 +64,7 @@ public class WinchPosition {
     } 
     
     public float getElevation() {
-        return altitude;
+        return elevation;
     }
     
     public float getLatitude() {

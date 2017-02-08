@@ -13,21 +13,21 @@ package DataObjects;
  */
 
 public class Sailplane {
-    int id;                                 //randomly generated id
-    String regNumber;                       //reg_number of the plane
-    String name;                            //glider name
-    String owner;                           //name of the owner
-    String type;                            //type of the plane
-    float maximumGrossWeight;               //max weight plane can carry
-    float emptyWeight;                      //empty weight of the plane
-    float indicatedStallSpeed;              //stall speed of the plane
-    float maximumWinchingSpeed;             //max winching speed of the plane
-    float maximumAllowableWeakLinkStrength; //max weak link of the plane
-    float maximumTension;                   //max tension of the plane
-    float cableReleaseAngle;                //cable release angle of the plane
-    boolean carryBallast;                   //whether or not the plane can carry ballast
-    boolean multipleSeats;                  //whether or not the plane can carry passengers
-    String optionalInfo;                    //optional info on the plane
+    private int id;                                 //randomly generated id
+    private String regNumber;                       //reg_number of the plane
+    private String name;                            //glider name
+    private String owner;                           //name of the owner
+    private String type;                            //type of the plane
+    private float maximumGrossWeight;               //max weight plane can carry
+    private float emptyWeight;                      //empty weight of the plane
+    private float indicatedStallSpeed;              //stall speed of the plane
+    private float maximumWinchingSpeed;             //max winching speed of the plane
+    private float maximumAllowableWeakLinkStrength; //max weak link of the plane
+    private float maximumTension;                   //max tension of the plane
+    private float cableReleaseAngle;                //cable release angle of the plane
+    private boolean carryBallast;                   //whether or not the plane can carry ballast
+    private boolean multipleSeats;                  //whether or not the plane can carry passengers
+    private String optionalInfo;                    //optional info on the plane
     
     float ballast;
     

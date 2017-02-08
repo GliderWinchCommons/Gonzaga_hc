@@ -394,12 +394,12 @@ public class DatabaseEntryInsert {
     /**
      * used to import an operator from a file
      * 
-     * @param theProfile the profile to add to the database
+     * @param operator the profile to add to the database
      * @param salt salt from a database backup
      * @param hash hash from a database backup
      * @return false if add fails
      */
-    public static boolean addOperatorToDB(Operator theProfile, String salt, String hash) {
+    public static boolean addOperatorToDB(Operator operator, String salt, String hash) {
         try (Connection connect = connect()) {
             if(connect == null) {
                 return false;
@@ -408,15 +408,15 @@ public class DatabaseEntryInsert {
                 "INSERT INTO Operator(operator_id, first_name, middle_name, last_name, admin,"
                         + "salt, hash, optional_info, unitSettings)"
                         + "values (?,?,?,?,?,?,?,?,?)");
-            ProfileInsertStatement.setInt(1, theProfile.getID());
-            ProfileInsertStatement.setString(2, theProfile.getFirst());
-            ProfileInsertStatement.setString(3, theProfile.getMiddle());
-            ProfileInsertStatement.setString(4, theProfile.getLast());
-            ProfileInsertStatement.setBoolean(5, theProfile.getAdmin());
+            ProfileInsertStatement.setInt(1, operator.getID());
+            ProfileInsertStatement.setString(2, operator.getFirst());
+            ProfileInsertStatement.setString(3, operator.getMiddle());
+            ProfileInsertStatement.setString(4, operator.getLast());
+            ProfileInsertStatement.setBoolean(5, operator.getAdmin());
             ProfileInsertStatement.setString(6, salt);
             ProfileInsertStatement.setString(7, hash);
-            ProfileInsertStatement.setString(8, theProfile.getInfo());
-            ProfileInsertStatement.setString(9, theProfile.getUnitSettingsForStorage());
+            ProfileInsertStatement.setString(8, operator.getInfo());
+            ProfileInsertStatement.setString(9, operator.getUnitSettingsForStorage());
             ProfileInsertStatement.executeUpdate();
             ProfileInsertStatement.close();
         }catch(SQLException e) {
@@ -429,11 +429,11 @@ public class DatabaseEntryInsert {
     /**
      * Adds the relevant data for a profile to the database with a password
      * 
-     * @param theProfile the profile to add to the database
+     * @param operator the profile to add to the database
      * @param pass the password for the operator
      * @return false if add fails
      */
-    public static boolean addOperatorToDB(Operator theProfile, String pass) {
+    public static boolean addOperatorToDB(Operator operator, String pass) {
         byte[] bsalt = new byte[pass.length()];
         String salt = "";
         SecureRandom ran = new SecureRandom();
@@ -459,15 +459,15 @@ public class DatabaseEntryInsert {
                 "INSERT INTO Operator(id, first_name, middle_name, last_name, admin,"
                         + "salt, hash, optional_info, unitSettings)"
                         + "values (?,?,?,?,?,?,?,?,?)");
-            ProfileInsertStatement.setInt(1, theProfile.getID());
-            ProfileInsertStatement.setString(2, theProfile.getFirst());
-            ProfileInsertStatement.setString(3, theProfile.getMiddle());
-            ProfileInsertStatement.setString(4, theProfile.getLast());
-            ProfileInsertStatement.setBoolean(5, theProfile.getAdmin());
+            ProfileInsertStatement.setInt(1, operator.getID());
+            ProfileInsertStatement.setString(2, operator.getFirst());
+            ProfileInsertStatement.setString(3, operator.getMiddle());
+            ProfileInsertStatement.setString(4, operator.getLast());
+            ProfileInsertStatement.setBoolean(5, operator.getAdmin());
             ProfileInsertStatement.setString(6, salt);
             ProfileInsertStatement.setString(7, hash);
-            ProfileInsertStatement.setString(8, theProfile.getInfo());
-            ProfileInsertStatement.setString(9, theProfile.getUnitSettingsForStorage());
+            ProfileInsertStatement.setString(8, operator.getInfo());
+            ProfileInsertStatement.setString(9, operator.getUnitSettingsForStorage());
             ProfileInsertStatement.executeUpdate();
             ProfileInsertStatement.close();
         }catch(SQLException e) {

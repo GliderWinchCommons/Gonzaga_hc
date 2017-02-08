@@ -20,9 +20,6 @@ import javax.swing.JOptionPane;
  * @author Alex Williams
  */
 public class DatabaseUnitSelectionUtilities {
-    private static final String databaseConnectionName = "jdbc:derby:hcDatabase;";
-    private static final String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
     
     /**
      * accessorss for retrieving the units for Pilot weight
@@ -34,13 +31,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT weight_unit "
                 + "FROM PilotUnits "
@@ -73,13 +70,13 @@ public class DatabaseUnitSelectionUtilities {
        int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT weight_unit "
                 + "FROM SailplaneUnits "
@@ -112,13 +109,13 @@ public class DatabaseUnitSelectionUtilities {
        int velocityUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT velocity_unit "
                 + "FROM SailplaneUnits "
@@ -151,13 +148,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT tension_unit "
                 + "FROM SailplaneUnits "
@@ -190,13 +187,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT distance_unit "
                 + "FROM AirfieldUnits "
@@ -229,13 +226,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT distance_unit "
                 + "FROM PositionUnits "
@@ -268,13 +265,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT distance_unit "
                 + "FROM DashboardUnits "
@@ -307,13 +304,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT tension_unit "
                 + "FROM DashboardUnits "
@@ -346,13 +343,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT velocity_unit "
                 + "FROM DashboardUnits "
@@ -385,13 +382,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT temp_unit "
                 + "FROM EnvironmentalUnits "
@@ -424,13 +421,13 @@ public class DatabaseUnitSelectionUtilities {
         int weightUnit = 0;
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
-        try (Connection connect = DriverManager.getConnection(databaseConnectionName)) {
+        try (Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName)) {
             Statement stmt = connect.createStatement();
             ResultSet thePilots = stmt.executeQuery("SELECT pressure_unit "
                 + "FROM EnvironmentalUnits "
@@ -467,15 +464,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE PilotUnits "
                                         + "SET weight_unit = " + unitIndex
@@ -499,15 +496,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE SailplaneUnits "
                                         + "SET weight_unit = " + unitIndex[0] + ", "
@@ -533,15 +530,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE AirfieldUnits "
                                         + "SET distance_unit = " + unitIndex
@@ -565,15 +562,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE PositionUnits "
                                         + "SET distance_unit = " + unitIndex
@@ -597,15 +594,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE DashboardUnits "
                                         + "SET distance_unit = " + unitIndex[0] + ", "
@@ -631,15 +628,15 @@ public class DatabaseUnitSelectionUtilities {
         //Check for DB drivers
         try{
             //Class derbyClass = RMIClassLoader.loadClass("lib/", "derby.jar");
-            Class.forName(driverName);
-            Class.forName(clientDriverName);
+            Class.forName(DatabaseInitialization.driverName);
+            Class.forName(DatabaseInitialization.clientDriverName);
         }catch(java.lang.ClassNotFoundException e) {
             throw e;
         }
         
         try {
             
-            Connection connect = DriverManager.getConnection(databaseConnectionName);
+            Connection connect = DriverManager.getConnection(DatabaseInitialization.databaseConnectionName);
             Statement updatePilotTabelStmt = connect.createStatement();
             String updatePilotString = "UPDATE EnvironmentalUnits "
                                         + "SET temp_unit = " + unitIndex[0] + ", "

@@ -14,15 +14,15 @@ public class DatabaseInitialization {
     public static final String HOSTCONTROLLER_VERSION = "3.0.0";
     public static final String DATABASE_VERSION = "3.0.0";
     public static final String WINCH_PRAM_VERSION = "1.0.0";
+    static final String databaseConnectionName = "jdbc:derby:hcDatabase;";
+    static final String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
+    static final String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
     
     /* Used to connect to the database 
     if you change the this method you should do that in connectEx as well
     */
     
     public static Connection connect() {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:hcDatabase;create=true";
         Connection connection = null;
         
         //Check for DB drivers
@@ -41,7 +41,7 @@ public class DatabaseInitialization {
         }catch(SQLException e) {
             //TODO Fix error handling
             JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, "
-                    + "somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
             logError(e);
         }
         return connection;
@@ -49,9 +49,6 @@ public class DatabaseInitialization {
     
     //Simmilar to the above but will throw exceptions
     public static Connection connectEx() throws ClassNotFoundException, SQLException {
-        String driverName = "org.apache.derby.jdbc.EmbeddedDriver";
-        String clientDriverName = "org.apache.derby.jdbc.ClientDriver";
-        String databaseConnectionName = "jdbc:derby:hcDatabase;create=true";
         Connection connection = null;
         //Check for DB drivers
         try {
@@ -66,7 +63,8 @@ public class DatabaseInitialization {
             connection = DriverManager.getConnection(databaseConnectionName);
         } catch (SQLException e) {
             //TODO Fix error handling
-            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, " + "somethin else is wrong", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Correctly loaded the JavaDb ClientDriver, "
+                    + e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
             throw e;
         }
         return connection;
@@ -103,63 +101,119 @@ public class DatabaseInitialization {
         if(connection == null) {
             return false;
         }
+        String fails = "";
         
         //Build and set Version
-        createVersion(connection);
-        System.out.println("Build version");
+        if(!createVersion(connection)) {
+            fails += "Version\n\r";
+        }
+       
         //Build and fill Capability table
-        createCapability(connection);
-        System.out.println("Build capability");
+        if(createCapability(connection)) {
+            fails += "Capability\n\r";
+        }
+        
         //Build the Pilot table
-        createPilot(connection);
-        System.out.println("Build pilot");  
+        if(createPilot(connection)) {
+            fails += "Pilot\n\r";
+        }
         //Build the Glider table
-        createGlider(connection);
-        System.out.println("Build glider");  
+        if(createGlider(connection)) {
+            fails += "Glider\n\r";
+        }
+        
         //Build the Airfield table  
-        createAirfield(connection);
-        System.out.println("Build airfield");        
+        if(createAirfield(connection)) {
+            fails += "Airfield\n\r";
+        }
+
         //Build the Runway table
-        createRunway(connection);
-        System.out.println("Build runway");        
+        if(createRunway(connection)) {
+            fails += "Runway\n\r";
+        }
+
         //Build the GliderPosition table
-        createGliderPosition(connection);
-        System.out.println("Build glider position");        
+        if(createGliderPosition(connection)) {
+            fails += "GliderPosition\n\r";
+        }
+
         //Build the WinchPosition table
-        createWinchPosition(connection);
-        System.out.println("Build winch position");        
-        //Build the Operator Profile table
-        createOperator(connection);
-        System.out.println("Build operator");        
+        if(createWinchPosition(connection)) {
+            fails += "WinchPosition\n\r";
+        }
+
+        //Build the Operator table
+        if(createOperator(connection)) {
+            fails += "Operator\n\r";
+        }
+
         //Build the Winch table
-        createWinch(connection);
-        System.out.println("Build winch");        
+        if(createWinch(connection)) {
+            fails += "Winch\n\r";
+        }
+
         //Build the Drum table
-        createDrum(connection);
-        System.out.println("Build drum");        
+        if(createDrum(connection)) {
+            fails += "Drum";
+        }
+
         //Build the Parachute table
-        createParachute(connection);
-        System.out.println("Build parachute"); 
+        if(createParachute(connection)) {
+            fails += "Parachute\n\r";
+        }
+
         //Build the Previous Airfield Info
-        createPrevAirfieldInfo(connection);
-        System.out.println("Build previous airfield info");        
+        if(createPrevAirfieldInfo(connection)) {
+            fails += "Previous Airfield\n\r";
+        }
+
         //Build the PreviousLaunches
-        createPreviousLaunches(connection);
-        System.out.println("Build previous launches");
+        if(createPreviousLaunches(connection)) {
+            fails += "Previous Launches\n\r";
+        }
         
         //Build Distance convesion tables
-        createDistanceUnits(connection);
-        createTensionUnits(connection);
-        createVelocityUnits(connection);
-        createWeightUnits(connection);
-        createTemperatureUnits(connection);
-        createPressureUnits(connection);
-        createPilotUnits(connection);
-        createGliderUnits(connection);
-        createAirfieldUnits(connection);
-        createPositionUnits(connection);
-        createDashboardUnits(connection);
-        createEnvironmentalUnits(connection);
+        if(createDistanceUnits(connection)) {
+            fails += "Distance Units\n\r";
+        }
+        if(createTensionUnits(connection)) {
+            fails += "Tension Units\n\r";
+        }
+        if(createVelocityUnits(connection)) {
+            fails += "Velocity Units\n\r";
+        }
+        if(createWeightUnits(connection)) {
+            fails += "Weight Units\n\r";
+        }
+        if(createTemperatureUnits(connection)) {
+            fails += "Temperature Units\n\r";
+        }
+        if(createPressureUnits(connection)) {
+            fails += "Pressure Units\n\r";
+        }
+        if(createPilotUnits(connection)) {
+            fails += "Pilot Units\n\r";
+        }
+        if(createGliderUnits(connection)) {
+            fails += "Glider Units\n\r";
+        }
+        if(createAirfieldUnits(connection)) {
+            fails += "Airfield Units\n\r";
+        }
+        if(createPositionUnits(connection)) {
+            fails += "Position Units\n\r";
+        }
+        if(createDashboardUnits(connection)) {
+            fails += "Dashboard Units\n\r";
+        }
+        if(createEnvironmentalUnits(connection)) {
+            fails += "Environmental Units\n\r";
+        }
+        
+        if(!fails.equals("")) {
+            JOptionPane.showMessageDialog(null, "Failed to create:\n\r" + fails, 
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         //Depricated
         createMessagesTable(connection);
@@ -173,7 +227,7 @@ public class DatabaseInitialization {
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createVersion(Connection connect) {
+    private static boolean createVersion(Connection connect) {
         String createPilotString = "CREATE TABLE Version"
                 + "(db_version VARCHAR(10), "
                 + "hc_version VARCHAR(10),"
@@ -187,9 +241,10 @@ public class DatabaseInitialization {
             ps.setString(2, HOSTCONTROLLER_VERSION);
             ps.executeUpdate();
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }        
+        return true;
     }
     
     /**
@@ -198,7 +253,7 @@ public class DatabaseInitialization {
      * @param connect the connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createPilot(Connection connect) {
+    private static boolean createPilot(Connection connect) {
         String createPilotString = "CREATE TABLE Pilot"
                 + "(pilot_id INT, "
                 + "first_name VARCHAR(30), "
@@ -215,9 +270,10 @@ public class DatabaseInitialization {
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createPilotString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }        
+        return true;
     }
     
     /**
@@ -226,7 +282,7 @@ public class DatabaseInitialization {
      * @param connectthe connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createGlider(Connection connect) {
+    private static boolean createGlider(Connection connect) {
         String createGliderString = "CREATE TABLE Glider"
                 + "(glider_id INT, "
                 + "reg_number VARCHAR(30),"
@@ -248,9 +304,10 @@ public class DatabaseInitialization {
         try (Statement createPilotTableStatement = connect.createStatement()) {
             createPilotTableStatement.execute(createGliderString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
       
     /**
@@ -259,7 +316,7 @@ public class DatabaseInitialization {
      * @param connectthe connection to be used for creating the table in the database
      * @throws SQLException if the table can't be created
      */
-    private static void createCapability(Connection connect) {
+    private static boolean createCapability(Connection connect) {
         String createCapablityString = "CREATE TABLE Capability"
                 + "(capability_id INT,"
                 + "capability_string VARCHAR(15),"
@@ -275,9 +332,10 @@ public class DatabaseInitialization {
                 createCapabilityTableStatement.executeUpdate(addAdvanced);
                 
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }        
+        return true;
     }
     
     /**
@@ -285,7 +343,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createAirfield(Connection connect) {
+    private static boolean createAirfield(Connection connect) {
         String createAirfieldString = "CREATE TABLE Airfield"
                 + "(airfield_id INT, "
                 + "name VARCHAR(30), "
@@ -301,9 +359,10 @@ public class DatabaseInitialization {
         try (Statement createAirfieldTableStatement = connect.createStatement()) {
             createAirfieldTableStatement.execute(createAirfieldString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -311,7 +370,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createRunway(Connection connect) {
+    private static boolean createRunway(Connection connect) {
         String createRunwayString = "CREATE TABLE Runway "
                 + "(runway_id INT, "
                 + "parent_id INT, "
@@ -323,9 +382,10 @@ public class DatabaseInitialization {
         try (Statement createRunwayTableStatement = connect.createStatement()) {
             createRunwayTableStatement.execute(createRunwayString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -333,7 +393,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createGliderPosition(Connection connect) {
+    private static boolean createGliderPosition(Connection connect) {
         String createGliderPositionString = "CREATE TABLE GliderPosition "
                 + "(glider_position_id INT, "
                 + "parent_id INT, "
@@ -347,9 +407,10 @@ public class DatabaseInitialization {
         try (Statement createGliderPositionTableStatement = connect.createStatement()) {
             createGliderPositionTableStatement.execute(createGliderPositionString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -357,7 +418,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createWinchPosition(Connection connect) {
+    private static boolean createWinchPosition(Connection connect) {
         String createWinchPositionString = "CREATE TABLE WinchPosition"
                 + "(winch_position_id INT, "
                 + "parent_id INT, "
@@ -371,9 +432,10 @@ public class DatabaseInitialization {
         try (Statement createWinchPositionTableStatement = connect.createStatement()) {
             createWinchPositionTableStatement.execute(createWinchPositionString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -381,7 +443,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createWinch(Connection connect) {
+    private static boolean createWinch(Connection connect) {
         String createDrumString = "CREATE TABLE Winch "
                 + "(winch_id INT, " 
                 + "name VARCHAR(30), " 
@@ -401,9 +463,10 @@ public class DatabaseInitialization {
         try (Statement createDrumTableStatement = connect.createStatement()) {
             createDrumTableStatement.execute(createDrumString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -411,7 +474,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createDrum(Connection connect) {
+    private static boolean createDrum(Connection connect) {
         String createDrumString = "CREATE TABLE Drum "
                 + "(drum_id INT, "
                 + "winch_id INT, "
@@ -430,9 +493,10 @@ public class DatabaseInitialization {
         try (Statement createDrumTableStatement = connect.createStatement()) {
             createDrumTableStatement.execute(createDrumString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -440,7 +504,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createParachute(Connection connect) {
+    private static boolean createParachute(Connection connect) {
         String createParachuteString = "CREATE TABLE Parachute"
                 + "(parachute_id INT, "
                 + "name VARCHAR(30), "
@@ -452,9 +516,10 @@ public class DatabaseInitialization {
         try (Statement createParachuteTableStatement = connect.createStatement()) {
             createParachuteTableStatement.execute(createParachuteString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
         
     /**
@@ -462,7 +527,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createPreviousLaunches(Connection connect) {
+    private static boolean createPreviousLaunches(Connection connect) {
         String createPastLaunchesInfo = "CREATE TABLE PreviousLaunches"
                 + "(start_timestamp TIMESTAMP, "
                 + "end_timestamp TIMESTAMP, "
@@ -526,9 +591,10 @@ public class DatabaseInitialization {
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPastLaunchesInfo);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -536,7 +602,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createPrevAirfieldInfo(Connection connect) {
+    private static boolean createPrevAirfieldInfo(Connection connect) {
         String createPrevInfo = "CREATE TABLE PreviousAirfieldInfo "
                 + "(table_id INT, "
                 + "airfield_name VARCHAR(30), "
@@ -564,9 +630,10 @@ public class DatabaseInitialization {
         try (Statement createPastLaunchesInfoTableStatement = connect.createStatement()) {
             createPastLaunchesInfoTableStatement.execute(createPrevInfo);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }       
+        return true;
     }
     
     /**
@@ -574,7 +641,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createOperator(Connection connect) {
+    private static boolean createOperator(Connection connect) {
         String createProfileString = "CREATE TABLE Operator"
                 + "(operator_id INT, "
                 + "first_name VARCHAR(30),"
@@ -589,9 +656,10 @@ public class DatabaseInitialization {
         try (Statement createProfileTableStatement = connect.createStatement()) {
             createProfileTableStatement.execute(createProfileString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -599,7 +667,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createDistanceUnits(Connection connect) {
+    private static boolean createDistanceUnits(Connection connect) {
         String createLengthUnitsString = "CREATE TABLE DistanceUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -618,9 +686,10 @@ public class DatabaseInitialization {
             createLengthUnitsTableStatement.executeUpdate(kilometers);
             createLengthUnitsTableStatement.close();
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -628,7 +697,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createTensionUnits(Connection connect) {
+    private static boolean createTensionUnits(Connection connect) {
         String createTensionUnitsString = "CREATE TABLE TensionUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -642,9 +711,10 @@ public class DatabaseInitialization {
             createTensionUnitsTableStatement.executeUpdate(poundForce);
             createTensionUnitsTableStatement.executeUpdate(kilogramForce);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -652,7 +722,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createWeightUnits(Connection connect) {
+    private static boolean createWeightUnits(Connection connect) {
         String createWeightUnitsString = "CREATE TABLE WeightUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -664,9 +734,10 @@ public class DatabaseInitialization {
             createWeightUnitsTableStatement.executeUpdate(pounds);
             createWeightUnitsTableStatement.executeUpdate(kilograms);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -674,7 +745,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createVelocityUnits(Connection connect) {
+    private static boolean createVelocityUnits(Connection connect) {
         String createVelocityUnitsString = "CREATE TABLE VelocityUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -690,9 +761,10 @@ public class DatabaseInitialization {
             createVelocityUnitsTableStatement.executeUpdate(metersPerSecond);
             createVelocityUnitsTableStatement.executeUpdate(knots);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -700,7 +772,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createTemperatureUnits(Connection connect) {
+    private static boolean createTemperatureUnits(Connection connect) {
         String createTemperatureUnitsString = "CREATE TABLE TemperatureUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -712,9 +784,10 @@ public class DatabaseInitialization {
             createVelocityUnitsTableStatement.executeUpdate(fahrenheit);
             createVelocityUnitsTableStatement.executeUpdate(celsius);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -722,7 +795,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createPressureUnits(Connection connect) {
+    private static boolean createPressureUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE PressureUnits"
                 + "(index INT, "
                 + "abbreviation VARCHAR(5), "
@@ -736,9 +809,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.executeUpdate(megapascals);
             createPressureUnitsTableStatement.executeUpdate(kilopascals);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -746,7 +820,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createPilotUnits(Connection connect) {
+    private static boolean createPilotUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE PilotUnits"
                 + "(unit_set INT, "
                 + "weight_unit INT, "
@@ -758,9 +832,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.executeUpdate(insertRow);
             createPressureUnitsTableStatement.close();
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -768,7 +843,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createGliderUnits(Connection connect) {
+    private static boolean createGliderUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE GliderUnits"
                 + "(unit_set INT, "
                 + "weight_unit INT, "
@@ -785,9 +860,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.executeUpdate(insertRow);
             createPressureUnitsTableStatement.close();
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
      /**
@@ -795,7 +871,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createAirfieldUnits(Connection connect) {
+    private static boolean createAirfieldUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE AirfieldUnits"
                 + "(unit_set INT, "
                 + "distance_unit INT, "
@@ -806,9 +882,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -816,7 +893,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createPositionUnits(Connection connect) {
+    private static boolean createPositionUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE PositionUnits"
                 + "(unit_set INT, "
                 + "distance_unit INT, "
@@ -827,9 +904,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -837,7 +915,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createDashboardUnits(Connection connect) {
+    private static boolean createDashboardUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE DashboardUnits"
                 + "(unit_set INT, "
                 + "distance_unit INT, "
@@ -853,9 +931,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -863,7 +942,7 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createEnvironmentalUnits(Connection connect) {
+    private static boolean createEnvironmentalUnits(Connection connect) {
         String createPressureUnitsString = "CREATE TABLE EnvironmentalUnits"
                 + "(unit_set INT, "
                 + "temp_unit INT, "
@@ -876,9 +955,10 @@ public class DatabaseInitialization {
             createPressureUnitsTableStatement.execute(createPressureUnitsString);
             createPressureUnitsTableStatement.executeUpdate(insertRow);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return false;
         }
+        return true;
     }
     
     /**
@@ -886,16 +966,17 @@ public class DatabaseInitialization {
      * 
      * @param connect the connection to be used for creating the table in the database
      */
-    private static void createMessagesTable(Connection connect) {
+    private static boolean createMessagesTable(Connection connect) {
         String createMessagesString = "CREATE TABLE Messages"
                 + "(timestamp BIGINT, "
                 + "message VARCHAR(40))";
         try (Statement createMessagesTableStatement = connect.createStatement()) {
             createMessagesTableStatement.execute(createMessagesString);
         }catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
             logError(e);
+            return true;
         }
+        return false;
     }
     
     /*
@@ -904,79 +985,72 @@ public class DatabaseInitialization {
     private static void dropVersion(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE VERSION");
-            System.out.println("Dropped version info");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropPrevLaunches(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE PREVIOUSLAUNCHES");
-            System.out.println("Dropped previous launch");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropPrevAirfield(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE PreviousAirfieldInfo");
-            System.out.println("Dropped previous airfield info");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropDrum(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE DRUM");
-            System.out.println("Dropped drum");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropWinch(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE WINCH");
-            System.out.println("Dropped winch");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropParachute(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE PARACHUTE");
-            System.out.println("Dropped parachute");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropOperator(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE OPERATOR");
-            System.out.println("Dropped operator");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropWinchPosition(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE WINCHPOSITION");
-            System.out.println("Dropped winch position");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropGliderPosition(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE GLIDERPOSITION");
-            System.out.println("Dropped glider position");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropRunway(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE RUNWAY");
-            System.out.println("Dropped runway");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropAirfield(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE AIRFIELD");
-            System.out.println("Dropped airfield");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropGlider(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE GLIDER");
-            System.out.println("Dropped glider");
         } catch(SQLException e) { logError(e); }
     }
     private static void dropPilot(Connection connect) {
         try(Statement stmt = connect.createStatement()) {
             stmt.execute("DROP TABLE PILOT");
-            System.out.println("Dropped pilot");
+        } catch(SQLException e) { logError(e); }
+    }
+    
+    private static void dropCapabliity(Connection connect) {
+        try(Statement stmt = connect.createStatement()) {
+            stmt.execute("DROP TABLE CAPABILITY");
         } catch(SQLException e) { logError(e); }
     }
     
@@ -1000,75 +1074,58 @@ public class DatabaseInitialization {
         dropAirfield(connect);
         dropGlider(connect);
         dropPilot(connect);
-        
-        try {
-            stmt.execute("DROP TABLE CAPABILITY");
-            System.out.println("Dropped capability");
-        } catch(SQLException e) { logError(e); }
+        dropCapabliity(connect);
         
         try {
             stmt.execute("DROP TABLE PilotUnits");
-            System.out.println("Dropped PilotUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE GliderUnits");
-            System.out.println("Dropped GliderUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE AirfieldUnits");
-            System.out.println("Dropped AirfieldUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE PositionUnits");
-            System.out.println("Dropped PositionUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE DashboardUnits");
-            System.out.println("Dropped DashboardUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE EnvironmentalUnits");
-            System.out.println("Dropped EnvironmentalUnits");
         } catch(SQLException e) { logError(e); }
             
         try {
             stmt.execute("DROP TABLE DistanceUnits");
-            System.out.println("Dropped DistanceUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE TensionUnits");
-            System.out.println("Dropped TensionUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE WeightUnits");
-            System.out.println("Dropped WeightUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE VelocityUnits");
-            System.out.println("Dropped VelocityUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE TemperatureUnits");
-            System.out.println("Dropped TemperatureUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE PressureUnits");
-            System.out.println("Dropped PressureUnits");
         } catch(SQLException e) { logError(e); }
         
         try {
             stmt.execute("DROP TABLE Messages");
-            System.out.println("Dropped Messages");
         } catch(SQLException e) { logError(e); }
         
         stmt.close();

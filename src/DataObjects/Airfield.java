@@ -12,15 +12,15 @@ package DataObjects;
  * @author garreola-gutierrez, dbennett3, Noah Fujioka
  */
 public class Airfield {
-    int id;                     //randomly generated id
-    String name;                //name of the airfield
-    String designator;          //the 3 charecter designator
-    float altitude;             //distance from sea level
-    float magneticVariation;    //varation from true north and magnetic north
-    float latitude;             //global y coordinate
-    float longitude;            //global x coordinate
-    int utcOffset;              //time difference from Universal Time
-    String optionalInfo;
+    private int id;                     //randomly generated id
+    private String name;                //name of the airfield
+    private String designator;          //the 3 charecter designator
+    private float altitude;             //distance from sea level
+    private float magneticVariation;    //varation from true north and magnetic north
+    private float latitude;             //global y coordinate
+    private float longitude;            //global x coordinate
+    private int utcOffset;              //time difference from Universal Time
+    private String optionalInfo;
     
     //constructors
     public Airfield(String name, String designator, float altitude, float magneticVariation, 

@@ -296,6 +296,7 @@ public class CurrentScenario extends javax.swing.JPanel implements Observer {
         this.add(profileButton);
     }                      
 
+    @Override
     public void update() {
        loadScenario();
     }
