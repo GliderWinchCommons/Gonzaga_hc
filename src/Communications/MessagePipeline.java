@@ -1,17 +1,12 @@
 package Communications;
 
-import DatabaseUtilities.DatabaseDataObjectUtilities;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 
 public class MessagePipeline implements Runnable {
     
@@ -145,21 +140,22 @@ public class MessagePipeline implements Runnable {
     }
     
     public void WriteToSocket(String s)
-    {
+    {   /*
         try {
             writer.write(s);
             writer.flush();
             try {
                 if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
                 {
-                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
+                    DatabaseEntryInsert.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
                     oldMessage = currentMessage;
                 }
             } catch (SQLException | ClassNotFoundException ex) {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-        }       
+        }    
+        */
     }
     
     public void run()
@@ -181,14 +177,16 @@ public class MessagePipeline implements Runnable {
                 }
             }*/
             listener.update(currentMessage);
+            /*
             try {
                 if(!currentMessage.equals(oldMessage) && !currentMessage.equals(""))
                 {
-                    DatabaseDataObjectUtilities.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
+                    DatabaseEntryInsert.addMessageToBlackBox(listener.getCurrentUnixTime(), currentMessage);
                     oldMessage = currentMessage;
                 }
             } catch (SQLException | ClassNotFoundException ex) {
-            }            
+            }       
+            */
         }
     }
     

@@ -13,42 +13,21 @@ package DataObjects;
  */
 
 public class Sailplane {
-    String id;
-    //n_number of the plane
-    String nNumber;
-    
-    //type of the plane
-    String type;
-    
-    //max gross weight of the plane
-    float maximumGrossWeight;
-    
-    //empty weight of the plane
-    float emptyWeight;
-    
-    //stall speed of the plane
-    float indicatedStallSpeed;
-    
-    //max winching speed of the plane
-    float maximumWinchingSpeed;
-    
-    //max weak link of the plane
-    float maximumAllowableWeakLinkStrength;
-    
-    //max tension of the plane
-    float maximumTension;
-    
-    //cable release angle of the plane
-    float cableReleaseAngle;
-    
-    //boolean on whether or not the plane can carry ballast
-    boolean carryBallast;
-    
-    //boolean on whether or not the plane can carry passengers
-    boolean multipleSeats;
-    
-    //optional info on the plane
-    String optionalInfo;
+    private int id;                                 //randomly generated id
+    private String regNumber;                       //reg_number of the plane
+    private String name;                            //glider name
+    private String owner;                           //name of the owner
+    private String type;                            //type of the plane
+    private float maximumGrossWeight;               //max weight plane can carry
+    private float emptyWeight;                      //empty weight of the plane
+    private float indicatedStallSpeed;              //stall speed of the plane
+    private float maximumWinchingSpeed;             //max winching speed of the plane
+    private float maximumAllowableWeakLinkStrength; //max weak link of the plane
+    private float maximumTension;                   //max tension of the plane
+    private float cableReleaseAngle;                //cable release angle of the plane
+    private boolean carryBallast;                   //whether or not the plane can carry ballast
+    private boolean multipleSeats;                  //whether or not the plane can carry passengers
+    private String optionalInfo;                    //optional info on the plane
     
     float ballast;
     
@@ -58,11 +37,35 @@ public class Sailplane {
     public Sailplane(){
     }
     
-    public Sailplane(String nNumber, String Type,
+    public Sailplane(String regNumber, String name, String owner, String Type,
                      float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
                      float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
                      float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
-        this.nNumber = nNumber;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
+        this.type = Type;
+        this.maximumGrossWeight = maximumGrossWeight;
+        this.emptyWeight= emptyWeight;
+        this.indicatedStallSpeed = indicatedStallSpeed;
+        this.maximumWinchingSpeed = maximumWinchingSpeed;
+        this.maximumAllowableWeakLinkStrength = maximumAllowableWeakLinkStrength;
+        this.maximumTension = maxTension;
+        this.cableReleaseAngle = cableReleaseAngle;
+        this.carryBallast = carryBallast;
+        this.multipleSeats = multipleSeats;
+        this.optionalInfo = optional;
+        
+        ballast = 0;
+    }
+    public Sailplane(int id, String regNumber, String name, String owner, String Type,
+                     float maximumGrossWeight, float emptyWeight, float indicatedStallSpeed,
+                     float maximumWinchingSpeed, float maximumAllowableWeakLinkStrength, float maxTension,
+                     float cableReleaseAngle, boolean carryBallast, boolean multipleSeats, String optional){
+        this.id = id;
+        this.regNumber = regNumber;
+        this.name = name;
+        this.owner = owner;
         this.type = Type;
         this.maximumGrossWeight = maximumGrossWeight;
         this.emptyWeight= emptyWeight;
@@ -78,22 +81,27 @@ public class Sailplane {
         ballast = 0;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            return id;
-        }
+    //getters and setters
+    
+    public void setId(int id) {
+        this.id = id;
     }
     
-    public void setId(String newId){
-        id = newId;
+    public int getId() {
+        return id;
     }
     
-    public String getNumber() {
-        return nNumber;
-    }     
+    public String getRegistration() {
+        return regNumber;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public String getOwner() {
+        return owner;
+    }
     
     public String getType() {
         return type;
@@ -130,37 +138,9 @@ public class Sailplane {
     public float getMaximumGrossWeight(){
         return maximumGrossWeight;
     }
-        
-    public int storeCarryBallast() {
-        if (carryBallast)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnCarryBallast(int cBallast) {
-        if(cBallast == 0)
-            return false;
-        else if(cBallast == 1)
-            return true;
-        return false;
-    }
     
     public boolean getCarryBallast() {
         return carryBallast;
-    }
-    
-    public int storeMultipleSeats() {
-        if (multipleSeats)
-            return 1;
-        return 0;
-    }
-    
-    public static boolean returnMultipleSeats(int cMultipleSeats) {
-        if(cMultipleSeats == 0)
-            return false;
-        else if(cMultipleSeats == 1)
-            return true;
-        return false;
     }
     
     public boolean getMultipleSeats() {
@@ -179,7 +159,13 @@ public class Sailplane {
         this.ballast += ballast;
     }
 
+    @Override
     public String toString() {
-        return nNumber;
+        return name + " " + regNumber + " " + owner;
+    }
+    
+    //check for valid glider
+    public boolean check() {
+        return !name.equals("") && !regNumber.equals("");
     }
 }

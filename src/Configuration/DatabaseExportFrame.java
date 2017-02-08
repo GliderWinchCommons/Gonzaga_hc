@@ -5,6 +5,8 @@
  */
 package Configuration;
 
+import static Communications.ErrorLogger.logError;
+import DatabaseUtilities.DatabaseEntrySelect;
 import DatabaseUtilities.DatabaseExporter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -43,8 +45,9 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
     private void initTableList()
     {
         try {
-            names = DatabaseUtilities.DatabaseDataObjectUtilities.getTables();
-        }catch(Exception e) {
+            names = DatabaseEntrySelect.getTables();
+        }catch(ClassNotFoundException | SQLException e) {
+            logError(e);
         }
     }
     
@@ -91,24 +94,24 @@ public class DatabaseExportFrame extends javax.swing.JFrame {
                         JFileChooser chooser = new JFileChooser();
                         chooser.setDialogTitle("Save");
                         chooser.setApproveButtonText("Save");
-                        String filePath = "";
-                        String fileName = "";
-                        String zipLocation = "";
+                        String filePath;
+                        String fileName;
+                        String zipLocation;
                         int option = chooser.showOpenDialog(DatabaseExportFrame.this);
                         if(option == JFileChooser.APPROVE_OPTION) {
-                            List<String> selectedTables = new ArrayList<String>();
+                            List<String> selectedTables;
                             selectedTables = TableList.getSelectedValuesList();
                             File file = chooser.getSelectedFile();
                             File chosen = chooser.getCurrentDirectory();
                             filePath = chosen.getPath();
                             fileName = file.getName();
                             zipLocation = filePath + "\\" + fileName;
-                            if(!fileName.contains(".zip"))
-                                zipLocation += ".zip";
+                            if(!fileName.contains(".hcdb"))
+                                zipLocation += ".hcdb";
                             try{
                             DatabaseExporter.exportDatabase(selectedTables, zipLocation);
                             getFrame().dispose();
-                            }catch(Exception e)
+                            }catch(Exception e) 
                             {
                                 JOptionPane.showMessageDialog(rootPane, "Couldn't export", "Error", JOptionPane.INFORMATION_MESSAGE);
                             }

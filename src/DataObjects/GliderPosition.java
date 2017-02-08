@@ -13,80 +13,55 @@ package DataObjects;
  */
 public class GliderPosition {
     
-    String id;
-    String positionName;
-    String runwayParent;
-    String runwayParentId;
-    String airfieldParent;
-    String airfieldParentId;
-    float altitude;
-    float latitude;
-    float longitude;
-    String optionalInfo;
+    private int id;                 //randomly generated id
+    private int runwayParentId;     //runways id
+    private String positionName;    //the positions name
+    private float altitude;         //distance from sea level
+    private float latitude;         //global y coordinate
+    private float longitude;        //global x coordinate
+    private String optionalInfo;
     
-    public GliderPosition(String name, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional){
+    //constructors
+    public GliderPosition(String name, float altitude, float latitude, float longitude, String optional){
        this.positionName = name;
-       this.runwayParent = runwayParent;
-       this.airfieldParent = airfieldParent;
        this.altitude = altitude;
        this.latitude = latitude;
        this.longitude = longitude;
        this.optionalInfo = optional;
     }
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            id = "";
-            return id;
-        }
+    
+    public GliderPosition(int id, int pid, String name, float altitude, 
+            float latitude, float longitude, String optional){
+        this.id = id;
+        this.runwayParentId = pid;
+        this.positionName = name;
+        this.altitude = altitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.optionalInfo = optional;
     }
     
-    public void setId(String newId){
+    //getters and setters
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int newId){
         id = newId;
     }
-    public String getGliderPositionId() {
+    public String getName() {
         return positionName;
     }
-        
-    public String getRunwayParent(){
-       return runwayParent; 
+    
+    public int getRunwayParentId(){
+        return runwayParentId;
     }
     
-    public String getRunwayParentId(){
-        if (runwayParentId != null){
-            return runwayParentId;
-        }
-        else{
-            runwayParentId = "";
-            return runwayParentId;
-        }
-    }
-    
-    public void setRunwayParentId(String newRunwayParentId){
+    public void setRunwayParentId(int newRunwayParentId){
         runwayParentId = newRunwayParentId;
     } 
     
-    public String getAirfieldParent(){
-       return airfieldParent; 
-    }
-    
-    public String getAirfieldParentId(){
-        if (airfieldParentId != null){
-            return airfieldParentId;
-        }
-        else{
-            airfieldParentId = "";
-            return airfieldParentId;
-        }
-    }
-    
-    public void setAirfieldParentId(String newAirfieldParentId){
-        airfieldParentId = newAirfieldParentId;
-    } 
-    
-    public float getAltitude() {
+    public float getElevation() {
         return altitude;
     }
     
@@ -102,8 +77,14 @@ public class GliderPosition {
         return optionalInfo;
     }
 
+    @Override
     public String toString() {
         return positionName;
+    }
+    
+    //check for valid object
+    public boolean check() {
+        return !positionName.equals("");
     }
 }
 

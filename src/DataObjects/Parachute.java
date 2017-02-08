@@ -11,43 +11,35 @@ package DataObjects;
  * @author Alec Jacuzzi, dbennett3
  */
 public class Parachute {
-    private int parachuteNumber;
-    private float lift;
-    private float drag;
-    private float weight;
-    private String name;
-    private Winch winch;
+    private int parachuteId;    //random id
+    private String name;        //parachute name
+    private float lift;         //how much lift he parachute has
+    private float drag;         //how much drag the parachute creates
+    private float weight;       //how much the parachute weighs
+    private String info;
     
+    //constructors
     public Parachute() {
-        //Parachute ID number
-        parachuteNumber = 0;
+        parachuteId = 0;
         lift = 0;
         drag = 0;
         weight = 0;
-        winch = null;
     }
     
-    public Parachute(String n, int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight) {
-        parachuteNumber = initialParachuteNumber;
+    public Parachute(int id, String n, float initialLift, float initialDrag, float initialWeight, String info) {
+        this.parachuteId = id;
         lift = initialLift;
         drag = initialDrag;
         weight = initialWeight;
         name = n;
+        this.info = info;
     }
     
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight) {
-        parachuteNumber = initialParachuteNumber;
+    public Parachute(float initialLift, float initialDrag, float initialWeight, String info) {
         lift = initialLift;
         drag = initialDrag;
         weight = initialWeight;
-    }
-    
-    public Parachute(int initialParachuteNumber, float initialLift, float initialDrag, float initialWeight, Winch winch) {
-        parachuteNumber = initialParachuteNumber;
-        lift = initialLift;
-        drag = initialDrag;
-        weight = initialWeight;
-        winch = this.winch;
+        this.info = info;
     }
     
     /**
@@ -55,20 +47,14 @@ public class Parachute {
     * This method always works, only if Parachute already
     * exists.
     *
-    * @param  newParachuteNumber  the int that is used to identify 
-    *                of the Parachute object
+    * @param  newParachuteNumber used to identify of the Parachute object
     */
-    public void setParachuteNumber(int newParachuteNumber) {
-        parachuteNumber = newParachuteNumber;
+    public void setParachuteId(int newParachuteNumber) {
+        parachuteId = newParachuteNumber;
     }
     
-    /**
-    * This method can change the lift of a Parachute object.
-    * This method always works, only if Parachute already
-    * exists.
-    *
-    * @param  newLift  the float that is contains the parachute lift
-    */
+    //setters and getters
+    
     public void setLift(float newLift) {
         lift = newLift;
     }
@@ -78,13 +64,6 @@ public class Parachute {
         weight = w;
     }
     
-    /**
-    * This method can change the drag of a Parachute object.
-    * This method always works, only if Parachute already
-    * exists.
-    *
-    * @param  newDrag  the float that contains the drag
-    */
     public void setDrag(float newDrag) {
         drag = newDrag;
     }
@@ -94,29 +73,10 @@ public class Parachute {
         name = s;
     }
     
-    /**
-    * Returns a Parachute object parachute ID number. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the parachute ID number of the Parachute object
-    */
-    public int getParachuteNumber() {
-        return parachuteNumber;
-    }
-    
-    /**
-    * Returns a Parachute object lift. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the lift of the Parachute object
-    */
     public float getLift() {
         return lift;
     }
     
-    /**
-    * Returns a Parachute object drag. 
-    * This method always returns immediately,only if Parachute exists. 
-    * @return      the drag of the Parachute object
-    */
     public float getDrag() {
         return drag;
     }
@@ -125,23 +85,25 @@ public class Parachute {
         return weight;
     }
     
-    public int getId() {
-        return parachuteNumber;
-    }
-    
-    public void setWinch(Winch newWinch) {
-        winch = newWinch;
-    }
-    
-    public Winch getWinch() {
-        return winch;
+    public int getParachuteId() {
+        return parachuteId;
     }
     
     public String getName() {
         return name;
     }
     
+    public String getInfo() {
+        return info;
+    }
+    
+    @Override
     public String toString() {
         return name;
+    }
+    
+    //check if parachute is valid
+    public boolean check() {
+        return !name.equals("");
     }
 }

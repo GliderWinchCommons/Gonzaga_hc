@@ -11,38 +11,42 @@ package DataObjects;
  * @author dbennett3, Noah Fujioka
  */
 public class WinchPosition {
-    String id;
-    String name;
-    String runwayParent;
-    String runwayParentId;
-    String airfieldParent;
-    String airfieldParentId;
-    float altitude;
-    float latitude;
-    float longitude;
-    String optionalInfo;
+    private int id;                 //random id
+    private int runwayParentId;     //parent runway random id
+    private String name;            //runway's name
+    private float elevation;         //distance from sea level
+    private float latitude;         //global y coordinate
+    private float longitude;        //global x coordinate
+    private String optionalInfo;
     
-    public WinchPosition(String name, String runwayParent, String airfieldParent, float altitude, float latitude, float longitude, String optional) {
+    //constructers
+    
+    public WinchPosition(String name, float altitude, float latitude, float longitude, String optional) {
         this.name = name;
-        this.runwayParent = runwayParent;
-        this.airfieldParent = airfieldParent;
-        this.altitude = altitude;
+        this.elevation = altitude;
         this.latitude = latitude;
         this.longitude = longitude;
         this.optionalInfo = optional;
     }
     
-    public String getId(){
-        if (id != null){
-            return id;
-        }
-        else{
-            id = "";
-            return id;
-        }
+    public WinchPosition(int id, int pid, String name, float altitude, 
+            float latitude, float longitude, String optional){
+        this.id = id;
+        this.runwayParentId = pid;
+        this.name = name;
+        this.elevation = altitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.optionalInfo = optional;
     }
     
-    public void setId(String newId){
+    
+    //getters and setters
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int newId){
         id = newId;
     }
     
@@ -50,44 +54,17 @@ public class WinchPosition {
         return name;
     }
     
-    public String getRunwayParent() {
-        return runwayParent;
-    }
 
-    public String getRunwayParentId(){
-        if (runwayParentId != null){
-            return runwayParentId;
-        }
-        else{
-            runwayParentId = "";
-            return runwayParentId;
-        }
+    public int getRunwayParentId(){
+        return runwayParentId;
     }
     
-    public void setRunwayParentId(String newRunwayParentId){
+    public void setRunwayParentId(int newRunwayParentId){
         runwayParentId = newRunwayParentId;
     } 
     
-    public String getAirfieldParent(){
-       return airfieldParent; 
-    }
-    
-    public String getAirfieldParentId(){
-        if (airfieldParentId != null){
-            return airfieldParentId;
-        }
-        else{
-            airfieldParentId = "";
-            return airfieldParentId;
-        }
-    }
-    
-    public void setAirfieldParentId(String newAirfieldParentId){
-        airfieldParentId = newAirfieldParentId;
-    } 
-    
-    public float getAltitude() {
-        return altitude;
+    public float getElevation() {
+        return elevation;
     }
     
     public float getLatitude() {
@@ -102,7 +79,13 @@ public class WinchPosition {
         return optionalInfo;
     }
 
-        public String toString() {
+    @Override
+    public String toString() {
         return name;
+    }
+    
+    //check to see if object is valid
+    public boolean check() {
+        return !name.equals("");
     }
 }

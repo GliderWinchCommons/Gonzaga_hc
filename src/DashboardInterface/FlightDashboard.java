@@ -4,13 +4,9 @@ import Communications.MessagePipeline;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -141,6 +137,7 @@ public class FlightDashboard extends javax.swing.JPanel
         dialSquare2.add(tensionSpeedDial, BorderLayout.CENTER);
         
         health = new SystemsStatus();
+        health.setPreferredSize(new Dimension(400, 300));
         graph = new LaunchGraph("title");
         
         MessagePipeline.getDataRelay().attach("SPEED", graph);

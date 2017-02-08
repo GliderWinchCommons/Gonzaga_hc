@@ -12,7 +12,7 @@ public class CurrentDataObjectSet {
     private static CurrentDataObjectSet instance = null;
     private Pilot currentPilot;
     private Sailplane currentSailplane;
-    private Profile currentProfile;
+    private Operator currentProfile;
     private Runway currentRunway;
     private WinchPosition currentWinchPos;
     private GliderPosition currentGliderPos;
@@ -26,30 +26,24 @@ public class CurrentDataObjectSet {
         if(instance == null)
         {
             instance = new CurrentDataObjectSet();
-            instance.observers = new ArrayList<Observer>();
+            instance.observers = new ArrayList();
         }
         return instance;
     }
     
+    //add an observer
     public void attach(Observer ob)
     {
         observers.add(ob);
     }
     
+    //notify's Observers
     public void forceUpdate()
     {
         notifyObservers();
     }
     
-    public void notifyWithString()
-    {
-       for(Observer ob : observers)
-        {
-            String msg = "";
-            ob.update(msg);
-        } 
-    }
-    
+    //I don't know why these are seprate
     private void notifyObservers()
     {
         for(Observer ob : observers)
@@ -65,11 +59,13 @@ public class CurrentDataObjectSet {
         instance = null;
     }
     
+    //check if object exists
     public static boolean IsInitialized()
     {
         return(instance != null);
     }
     
+    //clears a part of the data object
     public void clearPilot()
     {
         if(instance != null) instance.currentPilot = null;
@@ -116,7 +112,7 @@ public class CurrentDataObjectSet {
         notifyObservers();        
     }
     
-    //Ah yeah, getters and setters
+    //Setters
     public void setCurrentPilot(Pilot pilot)
     {
         if(instance != null)
@@ -149,7 +145,7 @@ public class CurrentDataObjectSet {
         }        
         instance.notifyObservers();
     }
-    public void setCurrentProfile(Profile profile)
+    public void setCurrentProfile(Operator profile)
     {
         if(instance != null)
         {
@@ -190,7 +186,7 @@ public class CurrentDataObjectSet {
         instance.notifyObservers();
     }    
     
-    
+    //Getters
     public Pilot getCurrentPilot()
     {
         if(instance == null)
@@ -268,7 +264,7 @@ public class CurrentDataObjectSet {
             return instance.currentWinch;
         }        
     }
-    public Profile getCurrentProfile()
+    public Operator getCurrentProfile()
     {
         if(instance == null)
         {
@@ -288,6 +284,25 @@ public class CurrentDataObjectSet {
         else
         {
             return instance.currentDrum;
+        }
+    }
+    
+    //check if we're ready to launch
+    public boolean check() {
+        if(instance == null) {
+            return false;
+        }
+        else {
+            boolean check = instance.currentPilot.check();
+            check = check && instance.currentSailplane.check();
+            check = check && instance.currentAirfield.check();
+            check = check && instance.currentRunway.check();
+            check = check && instance.currentGliderPos.check();
+            check = check && instance.currentWinchPos.check();
+            check = check && instance.currentWinch.check();
+            check = check && instance.currentDrum.check();
+            check = check && instance.currentDrum.getParachute().check();
+            return check;
         }
     }
 }

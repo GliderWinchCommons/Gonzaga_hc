@@ -12,28 +12,22 @@ package DataObjects;
  * @author awilliams5, dbennett3, Noah Fujioka
  */
 public class Pilot {
-    //Pilot's unique id
-    String pilotId;
-    //Pilot's last name
-    String lastName;
-    //Pilot's first name
-    String firstName;
-    //Pilot's middle name
-    String middleName;
-    //Pilot's weight
-    float flightWeight;
-    //Pilot's capability
-    String capability;
-    //Pilot's paunch preference
-    String preference;
-    //Pilot's Emergency Contact Info
-    String emergencyContact;
-    //Pilot's Emergency Medical Info
-    String medInfo;
-    //Pilot's optional_info
-    String optional_info;
     
-    public Pilot(String pilotId, String firstName, String lastName, String middleName, float weight, String capability, String preference, String emergencyContact, String medInfo, String optional) {
+    private int pilotId;                //randomly genrated id
+    private String lastName;            //Pilot's last name
+    private String firstName;           //Pilot's first name
+    private String middleName;          //Pilot's middle name
+    private float flightWeight;         //Pilot's weight
+    private String capability;          //Pilot's capability
+    private float preference;           //Pilot's launch preference
+    private String emergencyContact;    //Emergency Contact name
+    private String emergencyPhone;      //Emergency Contact number
+    private String optional_info;
+    
+    //constructors
+    public Pilot(int pilotId, String firstName, String lastName, String middleName,
+            float weight, String capability, float preference, String emergencyContact,
+            String medInfo, String optional) {
         this.pilotId = pilotId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -42,20 +36,16 @@ public class Pilot {
         this.capability = capability;
         this.preference = preference;
         this.emergencyContact = emergencyContact;
-        this.medInfo = medInfo;
+        this.emergencyPhone = medInfo;
         this.optional_info = optional;
     }
     
-    public String getPilotId() {
-        if (pilotId != null){
-            return pilotId;
-        }
-        else{
-            pilotId = "";
-            return pilotId;
-        }
+    //setters and getters
+    
+    public int getPilotId() {
+        return pilotId;
     }
-    public void setPilotId(String newId) {
+    public void setPilotId(int newId) {
         pilotId = newId;
     }
     
@@ -79,16 +69,16 @@ public class Pilot {
         return capability;
     }
     
-    public String getPreference() {
+    public float getPreference() {
         return preference;
     }
     
-    public String getEmergencyContact() {
+    public String getEmergencyName() {
         return emergencyContact;
     }
     
-    public String getMedInfo() {
-        return medInfo;
+    public String getEmergencyPhone() {
+        return emergencyPhone;
     }
     
     public String getOptionalInfo() {
@@ -100,12 +90,18 @@ public class Pilot {
         return (firstName + " " + middleName + " " + lastName);
     }
     
+    //check if pilot is set
+    public boolean check() {
+        return !lastName.equals("") && !firstName.equals("") && flightWeight != 0;
+    }
+    
     /**
      * 
      * @param other Pilot being compared to this pilot
      * @return true if the pilot id's are the same 
-     */
+     *
     public boolean pilotEquals(Pilot other) {
-        return pilotId.equals(other.pilotId);
+        return pilotId == other.pilotId;
     }
+    */
 }
